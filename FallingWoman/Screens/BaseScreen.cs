@@ -11,8 +11,8 @@ namespace FallingWoman.Screens
     public abstract class BaseScreen : IScreen
     {
         protected readonly List<Button> Buttons = new List<Button>();
-        private MouseState _lastMouseState;
-        private MouseState _currentMouseState;
+        protected MouseState LastMouseState;
+        protected MouseState CurrentMouseState;
 
         public Color BackgroundColor { get; protected set; }
 
@@ -29,19 +29,19 @@ namespace FallingWoman.Screens
 
         public void Update(GameTime gameTime)
         {
-            _currentMouseState = Mouse.GetState();
-            var mouseRectangle = new Rectangle(_currentMouseState.X, _currentMouseState.Y, 1, 1);
+            CurrentMouseState = Mouse.GetState();
+            var mouseRectangle = new Rectangle(CurrentMouseState.X, CurrentMouseState.Y, 1, 1);
 
             foreach (var button in Buttons)
             {
                 // Moving
-                if (_currentMouseState.X != _lastMouseState.X || _currentMouseState.Y != _lastMouseState.Y)
+                if (CurrentMouseState.X != LastMouseState.X || CurrentMouseState.Y != LastMouseState.Y)
                 {
                     button.OnCursorMove(mouseRectangle);
                 }
 
                 // Clicking
-                if (_lastMouseState.LeftButton == ButtonState.Pressed && _currentMouseState.LeftButton == ButtonState.Released)
+                if (LastMouseState.LeftButton == ButtonState.Pressed && CurrentMouseState.LeftButton == ButtonState.Released)
                 {
                     button.OnCursorClick(MouseButton.Left);
                 }
@@ -51,7 +51,7 @@ namespace FallingWoman.Screens
 
             OnUpdate(gameTime);
 
-            _lastMouseState = _currentMouseState;
+            LastMouseState = CurrentMouseState;
         }
 
         protected abstract void OnUpdate(GameTime gameTime);

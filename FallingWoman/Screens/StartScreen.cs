@@ -1,6 +1,8 @@
-﻿using FallingWoman.Graphics;
+﻿using System;
+using FallingWoman.Graphics;
 using FallingWoman.Helpers;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -15,6 +17,9 @@ namespace FallingWoman.Screens
         private const string Start = "start";
 
         private Animation _animation;
+        private float _startTextScale = 1.0f;
+        private float _targetTextScale = 1.0f;
+        private SoundEffect _pop;
 
         public StartScreen()
         {
@@ -25,6 +30,8 @@ namespace FallingWoman.Screens
         {
             _spriteSheet = content.Load<Texture2D>("IdleAnimation-Sheet");
             _font = content.Load<SpriteFont>("AltText");
+
+            _pop = content.Load<SoundEffect>("pop");
 
             var startButton = UIHelpers.CreateButton(_spriteSheet, new Rectangle(163, 436, 125, 44),
                 new Vector2(FallingWoman.ScreenWidth / 2.0f, FallingWoman.ScreenHeight / 2.0f + 20), _font,
@@ -43,10 +50,37 @@ namespace FallingWoman.Screens
         public override void OnShow()
         {
         }
-
+        
         protected override void OnUpdate(GameTime gameTime)
         {
             _animation.Update(gameTime);
+
+            var startTextSize = _font.MeasureString(Start) * _startTextScale;
+            var startTextRectangle = new Rectangle((int) (FallingWoman.ScreenWidth / 2.0f - startTextSize.X / 2.0f), (int) (FallingWoman.ScreenHeight / 2.0f - startTextSize.Y / 2.0f),
+                (int) startTextSize.X, (int) startTextSize.Y);
+            var mouseRectangle = new Rectangle(CurrentMouseState.X, CurrentMouseState.Y, 1, 1);
+
+            if (mouseRectangle.Intersects(startTextRectangle))
+            {
+                if (Math.Abs(_targetTextScale - 2.0f) > 0.01f)
+                {
+                    _pop.Play();
+                }
+                
+                _targetTextScale = 2.0f;
+            }
+            else
+            {
+                if (Math.Abs(_targetTextScale - 1.0f) > 0.01f)
+                {
+                    _pop.Play();
+                }
+                
+                _targetTextScale = 1.0f;
+            }
+
+            _targetTextScale = mouseRectangle.Intersects(startTextRectangle) ? 2.0f : 1.0f;
+            _startTextScale = MathHelper.Lerp(_startTextScale, _targetTextScale, 0.25f);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -56,8 +90,10 @@ namespace FallingWoman.Screens
             spriteBatch.Begin(samplerState: SamplerState.PointClamp);
 
             spriteBatch.Draw(_spriteSheet, Vector2.Zero, _animation.GetFrame(), Color.White);
+
+            var textSize = _font.MeasureString(Start);
             spriteBatch.DrawString(_font, Start,
-                new Vector2(FallingWoman.ScreenWidth / 2.0f - 51, FallingWoman.ScreenHeight / 2.0f), Color.White);
+                new Vector2(FallingWoman.ScreenWidth / 2.0f, FallingWoman.ScreenHeight / 2.0f), Color.White, 0.0f, textSize * 0.5f, _startTextScale, SpriteEffects.None, 0);
 
             spriteBatch.End();
         }
