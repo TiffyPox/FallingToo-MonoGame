@@ -7,7 +7,7 @@ namespace FallingWoman
 {
     public class FallingWoman : Game
     {
-        private const string GameTitle = "Hello Twitter";
+        private const string GameTitle = "Falling Too";
         public static int ScreenWidth;
         public static int ScreenHeight;
 

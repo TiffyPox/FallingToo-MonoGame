@@ -69,6 +69,12 @@
 /processorParam:Quality=Best
 /build:pop.wav
 
+#begin popHigh.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:popHigh.wav
+
 #begin WalkingAnimation.png
 /importer:TextureImporter
 /processor:TextureProcessor

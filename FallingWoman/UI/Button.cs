@@ -45,7 +45,7 @@ namespace FallingWoman.UI
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            var color = _hovering ? Color.White * 0.7f : Color.White;
+            var color = _hovering ? Color.White * 0.3f : Color.White;
 
                 _sprite.Draw(spriteBatch, _position, color);
         }

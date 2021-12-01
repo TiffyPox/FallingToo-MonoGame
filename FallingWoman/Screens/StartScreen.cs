@@ -15,11 +15,16 @@ namespace FallingWoman.Screens
         private SpriteFont _font;
 
         private const string Start = "start";
+        private const string Title = "\"falling too...\"";
 
         private Animation _animation;
+        
         private float _startTextScale = 1.0f;
         private float _targetTextScale = 1.0f;
+        
         private SoundEffect _pop;
+        
+        // 25, 111, 251, 105
 
         public StartScreen()
         {
@@ -43,7 +48,7 @@ namespace FallingWoman.Screens
         public override void Initialize()
         {
             base.Initialize();
-
+            
             _animation = new Animation(new Vector2(300, 500), _spriteSheet.Width / 300);
         }
 
@@ -94,6 +99,10 @@ namespace FallingWoman.Screens
             var textSize = _font.MeasureString(Start);
             spriteBatch.DrawString(_font, Start,
                 new Vector2(FallingWoman.ScreenWidth / 2.0f, FallingWoman.ScreenHeight / 2.0f), Color.White, 0.0f, textSize * 0.5f, _startTextScale, SpriteEffects.None, 0);
+            
+            var titleSize = _font.MeasureString(Title);
+            spriteBatch.DrawString(_font, Title,
+                new Vector2(FallingWoman.ScreenWidth / 2.0f - titleSize.X / 2.0f, FallingWoman.ScreenHeight / 2.0f - titleSize.Y * 2.0f), Color.White);
 
             spriteBatch.End();
         }
