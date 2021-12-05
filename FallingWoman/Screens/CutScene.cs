@@ -53,15 +53,6 @@ namespace FallingWoman.Screens
         {
             _animation.Update(gameTime);
             
-            if (_animation.GetFrameNumber() > 10 && _animation.GetFrameNumber() < 19)
-            {
-                _rotation = _rotation == 1 ? -1 : 1;
-            }
-            else
-            {
-                _rotation = 0;
-            }
-            
             if (!_screenEnded) return;
             
             _currentTime -= (float) gameTime.ElapsedGameTime.TotalSeconds;
@@ -76,23 +67,11 @@ namespace FallingWoman.Screens
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: GetMatrix());
+            spriteBatch.Begin(samplerState: SamplerState.PointClamp);
 
             spriteBatch.Draw(_spriteSheet, new Vector2(0, 0), _animation.GetFrame(), _color);
 
             spriteBatch.End();
-        }
-
-        private int _rotation = 0;
-
-        private Matrix GetMatrix()
-        {
-            return
-                Matrix.CreateTranslation(-new Vector3(_animation.GetFrame().Width / 2.0f,
-                    _animation.GetFrame().Height / 2.0f, 0))
-                * Matrix.CreateRotationZ(MathHelper.ToRadians(_rotation * 0.5f))
-                * Matrix.CreateTranslation(new Vector3(_animation.GetFrame().Width / 2.0f,
-                    _animation.GetFrame().Height / 2.0f, 0));
         }
     }
 }
