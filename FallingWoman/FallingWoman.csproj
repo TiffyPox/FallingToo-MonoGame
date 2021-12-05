@@ -29,8 +29,5 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Content\Robot Crush.ttf" />
-    <Content Include="Content\Robot Crush.ttf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
 </Project>
