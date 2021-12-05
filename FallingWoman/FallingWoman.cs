@@ -17,6 +17,9 @@ namespace FallingWoman
 
         private SpriteBatch _spriteBatch;
 
+        public const bool Debug = false;
+        public static Texture2D Pixel;
+
         public FallingWoman()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -28,6 +31,7 @@ namespace FallingWoman
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
+            Pixel = Content.Load<Texture2D>("pixel");
             ScreenWidth = _graphics.PreferredBackBufferWidth = 300;
             ScreenHeight = _graphics.PreferredBackBufferHeight = 500;
             _graphics.ApplyChanges();

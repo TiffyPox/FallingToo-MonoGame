@@ -9,6 +9,7 @@ namespace FallingWoman.Screens
     {
         private SpriteFont _playFont;
         private SpriteFont _altFont;
+        private Texture2D _spriteSheet;
 
         private const string Play = "play";
         private const string Options = "options";
@@ -16,7 +17,7 @@ namespace FallingWoman.Screens
 
         public MenuScreen() // Need to add sound
         {
-            BackgroundColor = new Color(0, 0, 0, 255);
+            BackgroundColor = Color.Black;
         }
 
         public override void OnShow()
@@ -26,19 +27,19 @@ namespace FallingWoman.Screens
 
         public override void Load(ContentManager content)
         {
-            var spriteSheet = content.Load<Texture2D>("FallingSpriteSheet");
+            _spriteSheet = content.Load<Texture2D>("FallingSpriteSheet");
             _playFont = content.Load<SpriteFont>("PlayText");
             _altFont = content.Load<SpriteFont>("AltText");
 
-            var playButton = UIHelpers.CreateButton(spriteSheet, new Rectangle(32, 32, 240, 144),
+            var playButton = UIHelpers.CreateButton(_spriteSheet, new Rectangle(32, 32, 240, 144),
                 new Vector2(FallingWoman.ScreenWidth / 2.0f, 125), _altFont,
                 () => { AddScreen?.Invoke(new StartScreen()); });
 
-            var optionsButton = UIHelpers.CreateButton(spriteSheet, new Rectangle(48, 192, 208, 96),
+            var optionsButton = UIHelpers.CreateButton(_spriteSheet, new Rectangle(48, 192, 208, 96),
                 new Vector2(FallingWoman.ScreenWidth / 2.0f, 300), _altFont,
                 () => { AddScreen?.Invoke(new OptionsScreen()); });
 
-            var creditsButton = UIHelpers.CreateButton(spriteSheet, new Rectangle(48, 192, 208, 96),
+            var creditsButton = UIHelpers.CreateButton(_spriteSheet, new Rectangle(48, 192, 208, 96),
                 new Vector2(FallingWoman.ScreenWidth / 2.0f, 425), _altFont,
                 () => { AddScreen?.Invoke(new CreditsScreen()); });
 
@@ -60,18 +61,18 @@ namespace FallingWoman.Screens
             base.Draw(spriteBatch);
 
             spriteBatch.Begin(samplerState: SamplerState.PointClamp);
-
+            
             var (x, y) = _playFont.MeasureString(Play);
             spriteBatch.DrawString(_playFont, Play, new Vector2(FallingWoman.ScreenWidth / 2.0f - x / 2.1f, 70),
                 Color.White);
-
+            
             var (a, b) = _altFont.MeasureString(Options);
             spriteBatch.DrawString(_altFont, Options, new Vector2(FallingWoman.ScreenWidth / 2.0f - a / 2.0f, 280),
                 Color.White);
-
+            
             spriteBatch.DrawString(_altFont, Credits, new Vector2(FallingWoman.ScreenWidth / 2.0f - a / 2.0f, 400),
                 Color.White);
-
+            
             spriteBatch.End();
         }
     }

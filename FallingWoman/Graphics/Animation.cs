@@ -8,7 +8,7 @@ namespace FallingWoman.Graphics
         public Action OnFinish;
         
         private float _elapsed;
-        private const float Delay = 600f;
+        private const float Delay = 500f;
         private int _frames = 0;
         private readonly Vector2 _frameSize;
         private readonly int _frameCount;
@@ -55,5 +55,7 @@ namespace FallingWoman.Graphics
         }
 
         internal Rectangle GetFrame() => new Rectangle((int)_frameSize.X * _frames, 0, (int)_frameSize.X, (int)_frameSize.Y);
+
+        public int GetFrameNumber() => _frames;
     }
 }
