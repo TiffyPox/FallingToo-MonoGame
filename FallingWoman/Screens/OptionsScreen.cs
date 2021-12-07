@@ -1,6 +1,9 @@
 ﻿using FallingWoman.Graphics;
+using FallingWoman.Helpers;
+using FallingWoman.Sound;
 using FallingWoman.UI;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -15,30 +18,34 @@ namespace FallingWoman.Screens
         private const string On = "on";
         private const string Off = "off";
 
-        public OptionsScreen()
+        private SoundSystem _soundSystem;
+        private SoundEffect _song;
+        
+        private Texture2D _spriteSheet;
+
+        public OptionsScreen(SoundSystem soundSystem)
         {
+            _soundSystem = soundSystem;
             BackgroundColor = new Color(0, 0, 0, 255);
         }
 
         public override void OnShow()
         {
+            _soundSystem.Play(_song);
         }
 
         public override void Load(ContentManager content)
         {
-            var spriteSheet = content.Load<Texture2D>("FallingSpriteSheet");
+            _spriteSheet = content.Load<Texture2D>("FallingSpriteSheet");
             _font = content.Load<SpriteFont>("AltText");
 
-            var returnButtonSprite = new Sprite(spriteSheet, 160, 368, 112, 64);
-            var returnButtonPosition = new Vector2(FallingWoman.ScreenWidth / 2.0f + 80, 50);
-            var returnButton = new Button(returnButtonSprite, _font, returnButtonPosition);
+            _song = content.Load<SoundEffect>("pianoMusic");
+            
+            var returnButton = UIHelpers.CreateButton(_spriteSheet, new Rectangle(160, 368, 112, 64),
+                new Vector2(FallingWoman.ScreenWidth / 2.0f + 80, 50), _font,
+                () => { AddScreen?.Invoke(new MenuScreen(_soundSystem)); });
 
             Buttons.Add(returnButton);
-
-            returnButton.OnClick += OnReturnButtonClicked;
-            {
-                AddScreen?.Invoke(new MenuScreen());
-            } 
         }
 
         private void OnReturnButtonClicked()

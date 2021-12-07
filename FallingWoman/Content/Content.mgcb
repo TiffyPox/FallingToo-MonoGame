@@ -56,6 +56,12 @@
 /processorParam:TextureFormat=Color
 /build:IdleAnimation-Sheet.png
 
+#begin pianoMusic.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:pianoMusic.mp3
+
 #begin pixel.png
 /importer:TextureImporter
 /processor:TextureProcessor

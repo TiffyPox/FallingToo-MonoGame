@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
+using FallingWoman.Sound;
 
 namespace FallingWoman
 {
@@ -19,6 +20,8 @@ namespace FallingWoman
 
         public const bool Debug = false;
         public static Texture2D Pixel;
+
+        private readonly SoundSystem _soundSystem = new SoundSystem();
 
         public FallingWoman()
         {
@@ -43,7 +46,7 @@ namespace FallingWoman
 
             Window.Title = GameTitle;
 
-            AddScreen(new MenuScreen()); // need to add soundsystem
+            AddScreen(new MenuScreen(_soundSystem));
         }
 
         private void AddScreen(IScreen screen)
