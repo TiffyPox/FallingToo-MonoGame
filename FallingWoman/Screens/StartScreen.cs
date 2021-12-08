@@ -1,11 +1,13 @@
 ﻿using System;
 using FallingWoman.Graphics;
 using FallingWoman.Helpers;
+using FallingWoman.Sound;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 
 namespace FallingWoman.Screens
 {
@@ -25,11 +27,14 @@ namespace FallingWoman.Screens
         
         private SoundEffect _pop;
         private Rectangle _startTextRectangle;
+        
+        private readonly SoundSystem _soundSystem;
 
-        // 25, 111, 251, 105
+        private Song _song;
 
-        public StartScreen()
+        public StartScreen(SoundSystem soundSystem)
         {
+            _soundSystem = soundSystem;
             BackgroundColor = new Color(255, 255, 255, 0);
         }
 
@@ -39,6 +44,7 @@ namespace FallingWoman.Screens
             _font = content.Load<SpriteFont>("AltText");
 
             _pop = content.Load<SoundEffect>("pop");
+            _song = content.Load<Song>("cutsceneMusic");
         }
 
         public override void Initialize()
@@ -72,7 +78,7 @@ namespace FallingWoman.Screens
 
                 if (CurrentMouseState.LeftButton == ButtonState.Pressed)
                 {
-                    AddScreen(new CutScene());
+                    AddScreen(new CutScene(_soundSystem));
                 }
             }
             else

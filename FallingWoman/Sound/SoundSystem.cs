@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Media;
+﻿using Microsoft.Xna.Framework.Media;
 
 namespace FallingWoman.Sound
 {
@@ -7,31 +6,7 @@ namespace FallingWoman.Sound
     {
         private bool _isMuted;
 
-        private bool _hasFinished;
-
-        private SoundEffect _currentSoundEffect;
-        private SoundEffectInstance _activeSoundEffect;
-
-        private Song _activeSong;
-
-        public void Play(SoundEffect soundEffect)
-        {
-            if (_isMuted)
-            {
-                return;
-            }
-
-            if (_currentSoundEffect != null && soundEffect == _currentSoundEffect)
-            {
-                _activeSoundEffect.Play();
-                return;
-            }
-            
-            _activeSoundEffect?.Pause();
-            _activeSoundEffect = soundEffect.CreateInstance();
-            _activeSoundEffect.Play();
-            _currentSoundEffect = soundEffect;
-        }        
+        private Song _activeSong;    
         
         public void Play(Song song, bool looping = false)
         {
@@ -40,21 +15,23 @@ namespace FallingWoman.Sound
                 return;
             }
 
-            if (_activeSong != null)
+            if (_activeSong != null && _activeSong == song) 
             {
-                MediaPlayer.Stop();
                 return;
             }
 
-            _activeSong = song;
-            
             MediaPlayer.IsRepeating = looping;
             MediaPlayer.Play(song);
+            _activeSong = song;
         }
 
-        public void Stop() => _activeSoundEffect?.Pause();
+        private void Stop()
+        {
+            _activeSong = null;
+            MediaPlayer.Stop();
+        }
 
-        public void Start() => _activeSoundEffect.Play();
+        private void Start() => MediaPlayer.Play(_activeSong);
 
         public void Mute(bool isMuted)
         {
@@ -69,7 +46,5 @@ namespace FallingWoman.Sound
                 Start();
             }
         }
-
-        public void Restart() => _activeSoundEffect = _currentSoundEffect.CreateInstance();
     }
 }

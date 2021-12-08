@@ -1,7 +1,9 @@
 ﻿using FallingWoman.Graphics;
+using FallingWoman.Sound;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 
 namespace FallingWoman.Screens
 {
@@ -18,16 +20,24 @@ namespace FallingWoman.Screens
         private const float MaxTime = 3.0f;
         private float _currentTime = MaxTime;
         private SpriteFont _font;
+        
+        private readonly SoundSystem _soundSystem;
 
-        public CutScene()
+        private Song _song;
+
+        public CutScene(SoundSystem soundSystem)
         {
+            _soundSystem = soundSystem;
             BackgroundColor = new Color(255, 255, 255, 0);
         }
 
         public override void Load(ContentManager content)
         {
             _spriteSheet = content.Load<Texture2D>("FallingAnimation-Sheet");
+            
             _font = content.Load<SpriteFont>("AltText");
+            
+            _song = content.Load<Song>("cutsceneMusic");
         }
 
         public override void Initialize()

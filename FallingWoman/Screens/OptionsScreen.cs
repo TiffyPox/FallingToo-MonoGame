@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 
 namespace FallingWoman.Screens
 {
@@ -19,31 +20,26 @@ namespace FallingWoman.Screens
         private const string Off = "off";
 
         private SoundSystem _soundSystem;
-        private SoundEffect _song;
         
         private Texture2D _spriteSheet;
 
         public OptionsScreen(SoundSystem soundSystem)
         {
-            _soundSystem = soundSystem;
             BackgroundColor = new Color(0, 0, 0, 255);
         }
 
         public override void OnShow()
         {
-            _soundSystem.Play(_song);
         }
 
         public override void Load(ContentManager content)
         {
             _spriteSheet = content.Load<Texture2D>("FallingSpriteSheet");
             _font = content.Load<SpriteFont>("AltText");
-
-            _song = content.Load<SoundEffect>("pianoMusic");
             
             var returnButton = UIHelpers.CreateButton(_spriteSheet, new Rectangle(160, 368, 112, 64),
                 new Vector2(FallingWoman.ScreenWidth / 2.0f + 80, 50), _font,
-                () => { AddScreen?.Invoke(new MenuScreen(_soundSystem)); });
+                () => { RequestScreenClose?.Invoke(); });
 
             Buttons.Add(returnButton);
         }

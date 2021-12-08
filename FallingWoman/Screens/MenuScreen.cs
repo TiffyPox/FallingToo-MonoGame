@@ -38,11 +38,11 @@ namespace FallingWoman.Screens
             _playFont = content.Load<SpriteFont>("PlayText");
             _altFont = content.Load<SpriteFont>("AltText");
 
-            _song = content.Load<Song>("pianoMusic");
+            _song = content.Load<Song>("menuMusic");
 
             var playButton = UIHelpers.CreateButton(_spriteSheet, new Rectangle(32, 32, 240, 144),
                 new Vector2(FallingWoman.ScreenWidth / 2.0f, 125), _altFont,
-                () => { AddScreen?.Invoke(new StartScreen()); });
+                () => { AddScreen?.Invoke(new StartScreen(_soundSystem)); });
 
             var optionsButton = UIHelpers.CreateButton(_spriteSheet, new Rectangle(48, 192, 208, 96),
                 new Vector2(FallingWoman.ScreenWidth / 2.0f, 300), _altFont,

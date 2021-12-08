@@ -9,18 +9,20 @@ namespace FallingWoman
     public class FallingWoman : Game
     {
         private const string GameTitle = "Falling Too";
+        
         public static int ScreenWidth;
         public static int ScreenHeight;
 
         private readonly GraphicsDeviceManager _graphics;
-         
-        private readonly Stack<IScreen> _screens = new Stack<IScreen>();
-
+        
         private SpriteBatch _spriteBatch;
 
         public const bool Debug = false;
+        
         public static Texture2D Pixel;
 
+        private readonly Stack<IScreen> _screens = new Stack<IScreen>();
+        
         private readonly SoundSystem _soundSystem = new SoundSystem();
 
         public FallingWoman()
