@@ -56,6 +56,7 @@ namespace FallingWoman.Screens
 
         public override void OnShow()
         {
+            _soundSystem.Play(_song, true);
         }
         
         protected override void OnUpdate(GameTime gameTime)

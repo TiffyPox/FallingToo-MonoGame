@@ -25,7 +25,7 @@ namespace FallingWoman.Sound
             _activeSong = song;
         }
 
-        private void Stop()
+        public void Stop()
         {
             _activeSong = null;
             MediaPlayer.Stop();

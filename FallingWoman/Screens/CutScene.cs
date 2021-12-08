@@ -61,6 +61,13 @@ namespace FallingWoman.Screens
 
         protected override void OnUpdate(GameTime gameTime)
         {
+            var currentFrame = _animation.GetFrameNumber();
+            
+            if (currentFrame == 25)
+            {
+                _soundSystem.Stop();
+            }
+            
             _animation.Update(gameTime);
             
             if (!_screenEnded) return;

@@ -42,7 +42,11 @@ namespace FallingWoman.Screens
 
             var playButton = UIHelpers.CreateButton(_spriteSheet, new Rectangle(32, 32, 240, 144),
                 new Vector2(FallingWoman.ScreenWidth / 2.0f, 125), _altFont,
-                () => { AddScreen?.Invoke(new StartScreen(_soundSystem)); });
+                () =>
+                {
+                    _soundSystem.Stop(); 
+                    AddScreen?.Invoke(new StartScreen(_soundSystem)); 
+                });
 
             var optionsButton = UIHelpers.CreateButton(_spriteSheet, new Rectangle(48, 192, 208, 96),
                 new Vector2(FallingWoman.ScreenWidth / 2.0f, 300), _altFont,
