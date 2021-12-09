@@ -1,6 +1,7 @@
 ﻿using FallingWoman.Graphics;
 using FallingWoman.Sound;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Media;
@@ -22,12 +23,17 @@ namespace FallingWoman.Screens
         private SpriteFont _font;
         
         private readonly SoundSystem _soundSystem;
+        private readonly SoundEffectSystem _soundEffectSystem;
 
         private Song _song;
+        
+        private SoundEffect _explosion;
+        
 
-        public CutScene(SoundSystem soundSystem)
+        public CutScene(SoundSystem soundSystem, SoundEffectSystem soundEffectSystem)
         {
             _soundSystem = soundSystem;
+            _soundEffectSystem = soundEffectSystem;
             BackgroundColor = new Color(255, 255, 255, 0);
         }
 
@@ -38,6 +44,8 @@ namespace FallingWoman.Screens
             _font = content.Load<SpriteFont>("AltText");
             
             _song = content.Load<Song>("cutsceneMusic");
+            
+            _explosion = content.Load<SoundEffect>("explosion");
         }
 
         public override void Initialize()
@@ -66,8 +74,14 @@ namespace FallingWoman.Screens
             if (currentFrame == 25)
             {
                 _soundSystem.Stop();
+                _soundEffectSystem.Play(_explosion);
             }
-            
+
+            if (currentFrame == 27 || currentFrame == 29 || currentFrame == 31 || currentFrame == 33) // Need to sort out animations
+            {
+                _soundEffectSystem.Play(_explosion);
+            }
+
             _animation.Update(gameTime);
             
             if (!_screenEnded) return;

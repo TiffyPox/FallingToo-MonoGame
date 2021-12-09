@@ -13,6 +13,8 @@ namespace FallingWoman.Screens
 {
     internal class StartScreen : BaseScreen
     {
+        // Screen where the player is Idle and the user can click 'Start' to begin the cutscene
+        
         private Texture2D _spriteSheet;
 
         private SpriteFont _font;
@@ -29,12 +31,14 @@ namespace FallingWoman.Screens
         private Rectangle _startTextRectangle;
         
         private readonly SoundSystem _soundSystem;
-
+        private readonly SoundEffectSystem _soundEffectSystem;
+        
         private Song _song;
 
-        public StartScreen(SoundSystem soundSystem)
+        public StartScreen(SoundSystem soundSystem, SoundEffectSystem soundEffectSystem)
         {
             _soundSystem = soundSystem;
+            _soundEffectSystem = soundEffectSystem;
             BackgroundColor = new Color(255, 255, 255, 0);
         }
 
@@ -72,14 +76,14 @@ namespace FallingWoman.Screens
             {
                 if (Math.Abs(_targetTextScale - 2.0f) > 0.01f)
                 {
-                    _pop.Play();
+                    _soundEffectSystem.Play(_pop);
                 }
                 
                 _targetTextScale = 2.0f;
 
                 if (CurrentMouseState.LeftButton == ButtonState.Pressed)
                 {
-                    AddScreen(new CutScene(_soundSystem));
+                    AddScreen(new CutScene(_soundSystem, _soundEffectSystem));
                 }
             }
             else

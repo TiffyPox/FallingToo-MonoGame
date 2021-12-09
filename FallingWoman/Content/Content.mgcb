@@ -32,6 +32,12 @@
 /processorParam:Quality=Best
 /build:cutsceneMusic.mp3
 
+#begin explosion.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:explosion.wav
+
 #begin FallingAnimation-Sheet.png
 /importer:TextureImporter
 /processor:TextureProcessor

@@ -1,17 +1,15 @@
-﻿using FallingWoman.Graphics;
-using FallingWoman.Helpers;
+﻿using FallingWoman.Helpers;
 using FallingWoman.Sound;
-using FallingWoman.UI;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Media;
 
 namespace FallingWoman.Screens
 {
     public class OptionsScreen : BaseScreen
     {
+        // User can mute the music and sounds in this screen
+        
         private SpriteFont _font;
 
         private const string Music = "music";

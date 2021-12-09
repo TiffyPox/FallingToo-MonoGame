@@ -24,6 +24,7 @@ namespace FallingWoman
         private readonly Stack<IScreen> _screens = new Stack<IScreen>();
         
         private readonly SoundSystem _soundSystem = new SoundSystem();
+        private readonly SoundEffectSystem _soundEffectSystem = new SoundEffectSystem();
 
         public FallingWoman()
         {
@@ -48,7 +49,7 @@ namespace FallingWoman
 
             Window.Title = GameTitle;
 
-            AddScreen(new MenuScreen(_soundSystem));
+            AddScreen(new MenuScreen(_soundSystem, _soundEffectSystem));
         }
 
         private void AddScreen(IScreen screen)

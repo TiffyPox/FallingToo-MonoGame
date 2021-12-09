@@ -18,13 +18,15 @@ namespace FallingWoman.Screens
         private const string Credits = "credits";
 
         private readonly SoundSystem _soundSystem;
+        private readonly SoundEffectSystem _soundEffectSystem;
 
         private Song _song;
 
-        public MenuScreen(SoundSystem soundSystem)
+        public MenuScreen(SoundSystem soundSystem, SoundEffectSystem soundEffectSystem)
         {
             BackgroundColor = Color.Black;
             _soundSystem = soundSystem;
+            _soundEffectSystem = soundEffectSystem;
         }
 
         public override void OnShow()
@@ -45,7 +47,7 @@ namespace FallingWoman.Screens
                 () =>
                 {
                     _soundSystem.Stop(); 
-                    AddScreen?.Invoke(new StartScreen(_soundSystem)); 
+                    AddScreen?.Invoke(new StartScreen(_soundSystem, _soundEffectSystem)); 
                 });
 
             var optionsButton = UIHelpers.CreateButton(_spriteSheet, new Rectangle(48, 192, 208, 96),

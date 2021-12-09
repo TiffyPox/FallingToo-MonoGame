@@ -1,15 +1,21 @@
 ﻿using FallingWoman.Helpers;
 using FallingWoman.Sound;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Media;
 
 namespace FallingWoman.Screens
 {
     internal class CreditsScreen : BaseScreen
     {
+        // A screen to credit the musicians
+        // Cutscene music is 'Emotional Piano' by @tictac9
+        // Credits is 'Piano Major7's' by @tictac9
+        // Menu music is 'Soundscape' by @tictac9
+        // Game music is 'Voyager' by @tictac9
+        // Pop sound effect is by @InspectorJ
+        // Explosion sound effect is by @qubodup
+        
         private SpriteFont _font;
 
         private const string Return = "menu";
