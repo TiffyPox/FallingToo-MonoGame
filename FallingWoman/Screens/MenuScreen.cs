@@ -46,8 +46,9 @@ namespace FallingWoman.Screens
                 new Vector2(FallingWoman.ScreenWidth / 2.0f, 125), _altFont,
                 () =>
                 {
-                    _soundSystem.Stop(); 
-                    AddScreen?.Invoke(new StartScreen(_soundSystem, _soundEffectSystem)); 
+                    _soundSystem.Stop();
+                    //AddScreen?.Invoke(new StartScreen(_soundSystem, _soundEffectSystem));
+                    AddScreen?.Invoke(new GameScreen());
                 });
 
             var optionsButton = UIHelpers.CreateButton(_spriteSheet, new Rectangle(48, 192, 208, 96),
