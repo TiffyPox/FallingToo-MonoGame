@@ -1,6 +1,8 @@
-﻿using Microsoft.Xna.Framework;
+﻿using FallingWoman.Sound;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 namespace FallingWoman.Screens
@@ -16,16 +18,22 @@ namespace FallingWoman.Screens
         private float _duplicateY;
 
         private Texture2D _spriteSheet;
+        
+        private readonly SoundSystem _soundSystem;
+        
+        private Song _song;
 
-        public GameScreen()
+        public GameScreen(SoundSystem soundSystem)
         {
             BackgroundColor = new Color(255, 255, 255, 0);
+            _soundSystem = soundSystem;
         }
 
         public override void Load(ContentManager content)
         {
             _spriteSheet = content.Load<Texture2D>("FallingSpriteSheet");
             _background = content.Load<Texture2D>("GameBackground");
+            _song = content.Load<Song>("gameMusic");
         }
 
         public override void Initialize()
@@ -39,6 +47,7 @@ namespace FallingWoman.Screens
 
         public override void OnShow()
         {
+            _soundSystem.Play(_song, true);
         }
 
         protected override void OnUpdate(GameTime gameTime)

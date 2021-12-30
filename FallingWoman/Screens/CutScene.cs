@@ -92,7 +92,7 @@ namespace FallingWoman.Screens
                 
             if (_currentTime <= 0)
             {
-                AddScreen?.Invoke(new GameScreen());
+                AddScreen?.Invoke(new GameScreen(_soundSystem));
             }
         }
 
