@@ -3,7 +3,6 @@
     public enum PlayerState
     {
         Idle,
-        Walking,
         Falling,
     }
 }

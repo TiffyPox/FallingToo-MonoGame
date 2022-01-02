@@ -1,4 +1,6 @@
-﻿using FallingWoman.Sound;
+﻿using FallingWoman.Entities;
+using FallingWoman.Graphics;
+using FallingWoman.Sound;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -23,6 +25,12 @@ namespace FallingWoman.Screens
         
         private Song _song;
 
+        private Player player;
+
+        private Sprite _fallingSprite;
+        
+        public PlayerState State { get; private set; }
+
         public GameScreen(SoundSystem soundSystem)
         {
             BackgroundColor = new Color(255, 255, 255, 0);
@@ -39,10 +47,16 @@ namespace FallingWoman.Screens
         public override void Initialize()
         {
             base.Initialize();
+            
+            _fallingSprite = new Sprite(_spriteSheet, 48, 465, 48, 28);
+            
+            player = new Player(_fallingSprite, new Vector2(100, 100));
 
             _duplicateY = _background.Height;
 
             _newGame = true;
+
+            State = PlayerState.Falling;
         }
 
         public override void OnShow()
@@ -52,6 +66,7 @@ namespace FallingWoman.Screens
 
         protected override void OnUpdate(GameTime gameTime)
         {
+            // Background Animation
             _backgroundY--;
             _backgroundY -= 5;
 
@@ -63,6 +78,8 @@ namespace FallingWoman.Screens
                 _duplicateY = _background.Height;
                 _backgroundY = 0;
             }
+            
+            player.Update(gameTime);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -70,11 +87,13 @@ namespace FallingWoman.Screens
             base.Draw(spriteBatch);
             
             spriteBatch.Begin(samplerState: SamplerState.PointClamp);
-            
+
             spriteBatch.Draw(_background, new Vector2(0,_backgroundY), Color.White);
             
             spriteBatch.Draw(_background, new Vector2(0,_duplicateY), Color.White);
-
+            
+            player.Draw(spriteBatch);
+            
             spriteBatch.End();
         }
     }

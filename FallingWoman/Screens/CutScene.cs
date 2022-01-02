@@ -1,4 +1,5 @@
-﻿using FallingWoman.Graphics;
+﻿using FallingWoman.Entities;
+using FallingWoman.Graphics;
 using FallingWoman.Sound;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
@@ -28,7 +29,8 @@ namespace FallingWoman.Screens
         private Song _song;
         
         private SoundEffect _explosion;
-        
+
+        public PlayerState State { get; private set; }
 
         public CutScene(SoundSystem soundSystem, SoundEffectSystem soundEffectSystem)
         {
@@ -51,6 +53,8 @@ namespace FallingWoman.Screens
         public override void Initialize()
         {
             base.Initialize();
+
+            State = PlayerState.Idle;
 
             _color = new Color(255, 255, 255);
 

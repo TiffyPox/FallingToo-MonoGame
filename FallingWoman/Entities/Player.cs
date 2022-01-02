@@ -7,77 +7,50 @@ namespace FallingWoman.Entities
 {
     public class Player : IGameEntity
     {
-        private float elapsed;
-        private float delay = 200f;
-        private int frames = 0;
+        private Sprite Sprite { get; set; }
 
-        private Sprite _idleSprite;
+        private Vector2 Position { get; set; }
 
-        private Rectangle destRect;
-        private Rectangle sourceRect;
+        private PlayerState State { get; set; }
+        private bool IsAlive { get; set; }
 
-        public Vector2 Position = new Vector2();
-
-        private KeyboardState keyboardState;
-
-        public PlayerState State { get; private set; }
-        public bool IsAlive { get; private set; }
+        private float Speed = 5f;
+        
         public int DrawOrder { get; set; }
 
-        public Player(Texture2D spriteSheet, Vector2 position) // need to add sound effect parameter
+        public Player(Sprite sprite, Vector2 position)
         {
+            Sprite = sprite;
             Position = position;
-            State = PlayerState.Idle;
-            _idleSprite = new Sprite(spriteSheet, 0, 0, 33, 80);
         }
 
         public void Initialize()
         {
             State = PlayerState.Idle;
             IsAlive = true;
-            destRect = new Rectangle(100, 100, 33, 80);
         }
 
-        private void Walk(GameTime gameTime)
+        private void Move(int x)
         {
-            State = PlayerState.Walking;
-
-            elapsed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-
-            if (elapsed >= delay)
-            {
-                if (frames >= 2)
-                {
-                    frames = 0;
-                }
-                else
-                {
-                    frames++;
-                }
-
-                elapsed = 0;
-            }
-
-            sourceRect = new Rectangle(33 * frames, 0, 33, 80);
+            Position += new Vector2(x * Speed,0);
         }
-
-
+        
         public void Update(GameTime gameTime)
         {
-            keyboardState = Keyboard.GetState();
-
-            if (keyboardState.IsKeyDown(Keys.Right))
-            {
-                Position.X += 2f;
+            if (Keyboard.GetState().IsKeyDown(Keys.D))
+            { 
+                Move(1);
             }
 
-            Walk(gameTime);
-
-            destRect = new Rectangle((int)Position.X, (int)Position.Y, 33, 80);
+            if (Keyboard.GetState().IsKeyDown(Keys.A))
+            {
+                Move(-1);
+            }
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
+            Sprite.Draw(spriteBatch, Position, Color.White);
         }
     }
 }
