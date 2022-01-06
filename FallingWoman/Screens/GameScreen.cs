@@ -25,11 +25,15 @@ namespace FallingWoman.Screens
         
         private Song _song;
 
-        private Player player;
+        private Player _player;
 
         private Sprite _fallingSprite;
+
+        private Sprite _progressBar;
         
-        public PlayerState State { get; private set; }
+        private Vector2 Position { get; set; }
+
+        private PlayerState State { get; set; }
 
         public GameScreen(SoundSystem soundSystem)
         {
@@ -50,7 +54,11 @@ namespace FallingWoman.Screens
             
             _fallingSprite = new Sprite(_spriteSheet, 48, 465, 48, 28);
             
-            player = new Player(_fallingSprite, new Vector2(100, 100));
+            _player = new Player(_fallingSprite, new Vector2(100, 100));
+
+            _progressBar = new Sprite(_spriteSheet, 279, 97  , 19, 295 );
+
+            Position = new Vector2(15,FallingWoman.ScreenHeight / 2.0f);
 
             _duplicateY = _background.Height;
 
@@ -79,7 +87,7 @@ namespace FallingWoman.Screens
                 _backgroundY = 0;
             }
             
-            player.Update(gameTime);
+            _player.Update(gameTime);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -92,7 +100,9 @@ namespace FallingWoman.Screens
             
             spriteBatch.Draw(_background, new Vector2(0,_duplicateY), Color.White);
             
-            player.Draw(spriteBatch);
+            _player.Draw(spriteBatch);
+
+            _progressBar.Draw(spriteBatch, Position, Color.White); // Testing progress bar sprite
             
             spriteBatch.End();
         }

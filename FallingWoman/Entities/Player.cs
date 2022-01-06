@@ -33,6 +33,15 @@ namespace FallingWoman.Entities
         private void Move(int x)
         {
             Position += new Vector2(x * Speed,0);
+            
+            if (Position.Y < Sprite.RenderHeight / 2.0f)
+            {
+                Position = new Vector2(Position.X, Sprite.RenderHeight / 2.0f);
+            }
+            else if (Position.Y > 480 - Sprite.RenderHeight / 2)
+            {
+                Position = new Vector2(Position.X, 480 - Sprite.RenderHeight / 2);
+            }
         }
         
         public void Update(GameTime gameTime)
