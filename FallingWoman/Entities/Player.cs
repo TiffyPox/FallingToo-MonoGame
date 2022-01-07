@@ -33,14 +33,15 @@ namespace FallingWoman.Entities
         private void Move(int x)
         {
             Position += new Vector2(x * Speed,0);
-            
-            if (Position.Y < Sprite.RenderHeight / 2.0f)
+
+            // Prevents the player sprite from going off the edge of the screen
+            if (Position.X < Sprite.RenderWidth / 2.0f)
             {
-                Position = new Vector2(Position.X, Sprite.RenderHeight / 2.0f);
+                Position = new Vector2(Sprite.RenderWidth / 2.0f, Position.Y);
             }
-            else if (Position.Y > 480 - Sprite.RenderHeight / 2)
+            else if (Position.X > 300 - Sprite.RenderWidth / 2.0f)
             {
-                Position = new Vector2(Position.X, 480 - Sprite.RenderHeight / 2);
+                Position = new Vector2(300 - Sprite.RenderWidth / 2.0f, Position.Y);
             }
         }
         
